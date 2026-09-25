@@ -1,0 +1,136 @@
+@import '@fontsource-variable/manrope/wght.css';
+@import '@fontsource-variable/playfair-display/wght.css';
+@import '@fontsource-variable/playfair-display/wght-italic.css';
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Manrope Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Playfair Display Variable', Georgia, serif;
+
+  --color-cream-50: #fdfaf5;
+  --color-cream-100: #fbf6ee;
+  --color-cream-200: #f4eadb;
+  --color-cream-300: #eadbc4;
+  --color-cream-400: #dcc6a6;
+
+  --color-coffee-50: #f3ece6;
+  --color-coffee-100: #e4d5c9;
+  --color-coffee-200: #c9ae99;
+  --color-coffee-300: #a8866d;
+  --color-coffee-400: #8a6750;
+  --color-coffee-500: #6f4f3b;
+  --color-coffee-600: #5a3e2e;
+  --color-coffee-700: #463023;
+  --color-coffee-800: #34231a;
+  --color-coffee-900: #241812;
+
+  --color-terra-50: #fcf0ea;
+  --color-terra-100: #f7ddd0;
+  --color-terra-200: #efbba2;
+  --color-terra-300: #e39673;
+  --color-terra-400: #d6784f;
+  --color-terra-500: #c4613a;
+  --color-terra-600: #a94f2d;
+  --color-terra-700: #8a3f25;
+
+  --color-sage-100: #e6ebdf;
+  --color-sage-500: #6f8560;
+  --color-sage-600: #5a6e4d;
+
+  --shadow-soft: 0 1px 2px rgb(52 35 26 / 0.04), 0 8px 24px -8px rgb(52 35 26 / 0.12);
+  --shadow-lift: 0 2px 4px rgb(52 35 26 / 0.04), 0 24px 48px -16px rgb(52 35 26 / 0.22);
+  --shadow-glow: 0 12px 32px -10px rgb(196 97 58 / 0.55);
+
+  --animate-steam: steam 3.2s ease-in-out infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-fade-up: fade-up 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  --animate-fade-in: fade-in 0.3s ease-out both;
+  --animate-pop: pop 0.6s cubic-bezier(0.2, 0.9, 0.3, 1.4) both;
+
+  @keyframes steam {
+    0% { transform: translateY(6px) scaleY(0.9); opacity: 0; }
+    30% { opacity: 0.7; }
+    100% { transform: translateY(-18px) scaleY(1.1); opacity: 0; }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes pop {
+    0% { transform: scale(0.4); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    @apply bg-cream-100 font-sans text-coffee-800;
+    font-feature-settings: 'ss01', 'cv11';
+  }
+  /* у Playfair по умолчанию старинные цифры — в ценах нужны ровные */
+  .font-display,
+  h1,
+  h2,
+  h3 {
+    font-feature-settings: 'lnum' 1;
+  }
+  ::selection {
+    @apply bg-terra-200 text-coffee-900;
+  }
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: pointer;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-terra-400);
+    outline-offset: 3px;
+  }
+}
+
+@utility container-x {
+  @apply mx-auto w-full max-w-[1320px] px-4 sm:px-6 lg:px-10;
+}
+@utility eyebrow {
+  @apply inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.22em] text-terra-500 uppercase;
+}
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-[15px] font-semibold transition-all duration-300 ease-out select-none disabled:cursor-not-allowed disabled:opacity-50;
+}
+@utility btn-primary {
+  @apply btn bg-terra-500 text-cream-50 shadow-glow hover:-translate-y-0.5 hover:bg-terra-600 active:translate-y-0;
+}
+@utility btn-dark {
+  @apply btn bg-coffee-800 text-cream-50 hover:-translate-y-0.5 hover:bg-coffee-900 hover:shadow-lift active:translate-y-0;
+}
+@utility btn-ghost {
+  @apply btn border border-coffee-800/15 bg-white/40 text-coffee-800 backdrop-blur hover:border-coffee-800/30 hover:bg-white/80;
+}
+@utility card {
+  @apply rounded-[28px] border border-coffee-800/[0.06] bg-cream-50 shadow-soft;
+}
+@utility input {
+  @apply w-full rounded-2xl border border-coffee-800/10 bg-white/70 px-4 py-3.5 text-[15px] text-coffee-900 transition outline-none placeholder:text-coffee-300 focus:border-terra-400 focus:bg-white focus:ring-4 focus:ring-terra-100;
+}
+@utility grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.2 0 0 0 0 0.13 0 0 0 0 0.1 0 0 0 0.09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@utility scrollbar-none {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
